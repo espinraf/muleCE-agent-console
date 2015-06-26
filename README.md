@@ -1,5 +1,11 @@
 #Mule CE Agent
 
+##Server
+
+To run the server you must to set MULE_HOME variable.
+
+
+
 ##REST API
 
 ###List of Apps
