@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="jquery-2.1.4.min.js"></script>
+    <script>
+        function getListApps(){
+            var url = "http://http://localhost:3000/getListApps";
+            var client = new XMLHttpRequest();
+            client.open("GET", url, false);
+            client.setRequestHeader("Content-Type", "text/plain");
+            client.send();
+
+            if (client.status == 200)
+                alert("The request succeeded!\n\nThe response representation was:\n\n" + client.responseText);
+            else
+                alert("The request did not succeed!\n\nThe response status was: " + client.status + " " + client.statusText + ".");
+
+        }
+    </script>
+</head>
+<body>
+<h1>Mule Deployments Console</h1>
+<br>
+<form action="http://localhost:3000/app" method="post" enctype="multipart/form-data">
+    File to deploy: <input type="file" name="fileUpload"><br>
+    <br>
+    <input type="submit" value="Submit">
+</form>
+<input type="button" onclick="getListApps()" value="Get Apps">
+</body>
+</html>
