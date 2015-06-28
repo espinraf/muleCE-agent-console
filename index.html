@@ -1,21 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <title>Mule Deployments Console</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" type="text/css" href="mule-agent.css">
     <script src="jquery-2.1.4.min.js"></script>
+    <script src="mule-agent.js"></script>
     <script>
-        function getListApps(){
-            var url = "http://http://localhost:3000/getListApps";
-            var client = new XMLHttpRequest();
-            client.open("GET", url, false);
-            client.setRequestHeader("Content-Type", "text/plain");
-            client.send();
-
-            if (client.status == 200)
-                alert("The request succeeded!\n\nThe response representation was:\n\n" + client.responseText);
-            else
-                alert("The request did not succeed!\n\nThe response status was: " + client.status + " " + client.statusText + ".");
-
-        }
+        $( window ).load(function() {
+            getListApps();
+        });
     </script>
 </head>
 <body>
@@ -24,8 +18,25 @@
 <form action="http://localhost:3000/app" method="post" enctype="multipart/form-data">
     File to deploy: <input type="file" name="fileUpload"><br>
     <br>
-    <input type="submit" value="Submit">
+    <input type="submit" value="Deploy">
 </form>
-<input type="button" onclick="getListApps()" value="Get Apps">
+<br>
+
+<div id="dynamictable">
+    <table>
+        <thead>
+        <tr>
+            <th>Mule App</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody id="tableElements">
+            <tr>
+                <td><strong>Test</strong></td>
+                <td><input type='button' id='Test' name='nickname' value='undeploy'></td>
+            </tr>
+        </tbody>
+    </table>
+    <div>
 </body>
 </html>

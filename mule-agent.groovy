@@ -17,6 +17,7 @@ import org.restlet.data.Status
 import org.restlet.ext.fileupload.RestletFileUpload
 import org.restlet.representation.Representation
 import org.restlet.representation.StringRepresentation
+import org.restlet.representation.ByteArrayRepresentation
 import org.restlet.resource.Post
 import org.restlet.resource.ServerResource
 import groovy.io.FileType
@@ -41,9 +42,22 @@ class RequestHandler extends Restlet {
                     def htmlFile = new File("index.html").getText('UTF-8')
                     response.setEntity(htmlFile, MediaType.TEXT_HTML)
                     break
+                case '/favicon.ico':
+                    def favIco = new File("favicon.ico").getBytes()
+                    def img = new ByteArrayRepresentation(favIco , MediaType.IMAGE_ICON);
+                    response.setEntity(img)
+                    break
                 case '/jquery-2.1.4.min.js':
                     def htmlFile = new File("jquery-2.1.4.min.js").getText('UTF-8')
-                    response.setEntity(htmlFile, MediaType.TEXT_PLAIN)
+                    response.setEntity(htmlFile, MediaType.APPLICATION_JAVASCRIPT)
+                    break
+                case '/mule-agent.js':
+                    def htmlFile = new File("mule-agent.js").getText('UTF-8')
+                    response.setEntity(htmlFile, MediaType.APPLICATION_JAVASCRIPT)
+                    break
+                case '/mule-agent.css':
+                    def htmlFile = new File("mule-agent.css").getText('UTF-8')
+                    response.setEntity(htmlFile, MediaType.TEXT_CSS)
                     break
                 case '/getListApps':
                     response.setEntity(getListApps().join(", "), MediaType.TEXT_PLAIN)

@@ -1,14 +1,40 @@
 
+
+
 function getListApps(){
-    var url = "http://http://localhost:3000/getListApps";
-    var client = new XMLHttpRequest();
-    client.open("GET", url, false);
-    client.setRequestHeader("Content-Type", "text/plain");
-    client.send();
+    $.get( "getListApps", function( data ) {
+        var res = data.split(",");
+        var i;
+        for (i = 0 ; i < res.length ; i++){
+            addTableElem(res[i]);
+        }
+    });
 
-    if (client.status == 200)
-        alert("The request succeeded!\n\nThe response representation was:\n\n" + client.responseText);
-    else
-        alert("The request did not succeed!\n\nThe response status was: " + client.status + " " + client.statusText + ".");
+}
 
+function deleteApp (app) {
+
+    jQuery.ajax({
+     type: "DELETE",
+     url: "/app/" + app,
+     success: function (data, status, jqXHR) {
+         // do something
+     },
+
+     error: function (jqXHR, status) {
+         // error handler
+     }
+    });
+}
+
+
+function addTableElem(data){
+    //$('#dynamictable').append('<table></table>');
+    var table = $('#tableElements');
+    table.append("<tr id='"+ data + 'TR' + "'><td>" + data + "</td><td><input type='button' id='"+ data +"' name='nickname' value='undeploy'></td></tr>");
+}
+
+function cleanTable(){
+    var row = data + "TR"
+    $(row).remove()
 }
