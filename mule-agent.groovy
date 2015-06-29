@@ -105,7 +105,7 @@ class RequestHandler extends Restlet {
             DiskFileItemFactory factory = new DiskFileItemFactory()
             factory.setSizeThreshold(1000000000)
 
-            // 2/ Create a new file upload handler based on the Restlet
+            // 2/ Create a new file  upload handler based on the Restlet
             // FileUpload extension that will parse Restlet requests and
             // generates FileItems.
             RestletFileUpload upload = new RestletFileUpload(factory)
@@ -142,7 +142,7 @@ class RequestHandler extends Restlet {
                     fos.close()
 
                     i = fn.indexOf(".zip")
-                    def dN = new File(deployDir + fn.substring(0, i))
+                    def dN = new File(deployDir + fn.substring(0, i) + "-anchor.txt")
                     println dN
                     while (!dN.exists()) {
                         sleep(5000)
