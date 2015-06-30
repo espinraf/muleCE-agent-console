@@ -73,3 +73,7 @@ $(function(){
   });
 
 });
+
+function reloadInitPage() {
+    window.location.href = "/index.html";
+}

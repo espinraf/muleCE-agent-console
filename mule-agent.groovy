@@ -149,10 +149,14 @@ class RequestHandler extends Restlet {
                         println """Waiting until $fnDeploy is DEPLOYED"""
                     }
 
-                    def result = new StringRepresentation(sb, MediaType.APPLICATION_JSON)
+                    /* def result = new StringRepresentation(sb, MediaType.APPLICATION_JSON)
                     println result
+                    response.setEntity(result) */
+
                     response.setStatus(Status.SUCCESS_CREATED)
-                    response.setEntity(result)
+                    def htmlFile = new File("deploy_response.html").getText('UTF-8')
+                    response.setEntity(htmlFile, MediaType.TEXT_HTML)
+
                 }
             }
         } else {
