@@ -9,40 +9,75 @@
     <script>
         $( window ).load(function() {
             getListApps();
+            getListDomains()
         });
     </script>
 </head>
 <body>
-<h1>Mule Deployments Console</h1>
+    <h1>Mule Deployments Console</h1>
 
-<h2>Deploy Application</h2>
+    <h2>Deploy Mule Application</h2>
 
-<form action="http://localhost:3000/app" method="post" enctype="multipart/form-data">
-    <label for="file">Choose File to deploy</label>
-    <input type="file" name="fileUpload" id="file" />
-    <input type="submit" value="Deploy">
-</form>
-<div id="info">
-    <p id="name">File Name: <span></span></p>
-    <p id="size">File Size: <span></span></p>
-    <p id="type">File Type: <span></span></p>
-</div>
-<h2>Active Applications</h2>
-<div id="dynamictable">
-    <table>
-        <thead>
-        <tr>
-            <th>Mule App</th>
-            <th>Action</th>
-        </tr>
-        </thead>
-        <tbody id="tableElements">
+    <form action="http://localhost:3000/app" method="post" enctype="multipart/form-data">
+        <label id="labelMule" for="file">Choose File to deploy</label>
+        <input type="file" name="fileUpload" id="file" />
+        <input type="submit" value="Deploy">
+    </form>
+
+    <div id="info">
+        <p id="name">File Name: <span></span></p>
+        <p id="size">File Size: <span></span></p>
+        <p id="type">File Type: <span></span></p>
+    </div>
+
+    <h2>Active Applications</h2>
+
+    <div id="dynamictable">
+        <table>
+            <thead>
             <tr>
-                <td><strong>Test</strong></td>
-                <td><input type='button' id='Test' name='nickname' value='undeploy' ></td>
+                <th>Mule App</th>
+                <th>Action</th>
             </tr>
-        </tbody>
-    </table>
+            </thead>
+            <tbody id="tableElements">
+                <tr>
+
+                </tr>
+            </tbody>
+        </table>
+    <div>
+
+    <h2>Deploy Mule Domain</h2>
+
+    <form action="http://localhost:3000/domain" method="post" enctype="multipart/form-data">
+        <label id="labelDom" for="file2">Choose File to deploy</label>
+        <input type="file" name="fileUpload" id="file2" />
+        <input type="submit" value="Deploy">
+    </form>
+
+    <div id="info2">
+        <p id="name2">File Name: <span></span></p>
+        <p id="size2">File Size: <span></span></p>
+        <p id="type2">File Type: <span></span></p>
+    </div>
+
+    <h2>Active Domains</h2>
+
+    <div id="dynamictable2">
+        <table>
+            <thead>
+            <tr>
+                <th>Domain App</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody id="tableElements2">
+            <tr>
+
+            </tr>
+            </tbody>
+        </table>
     <div>
 
     <div id="copyrights">

@@ -1,8 +1,10 @@
 #Mule CE Agent
 
-##Server
+##How to run Server
 
 To run the server you must to set MULE_HOME variable.
+
+# groovy mule-agent.groovy
 
 
 

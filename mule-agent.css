@@ -180,7 +180,7 @@ label:hover {
   display:none;
 }
 
-#info {
+#info, #info2 {
   display:none;
   margin:5% auto;
 	padding:10px 20px;
@@ -191,7 +191,7 @@ label:hover {
 	border-radius:3px;
 }
 
-#size span, #type span, #name span {
+#size span, #type span, #name span, #size2 span, #type2 span, #name2 span {
   color:#EA4026;
 }
 
