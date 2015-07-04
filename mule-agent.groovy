@@ -142,9 +142,17 @@ class RequestHandler extends Restlet {
                     fos.close()
 
                     i = fn.indexOf(".zip")
-                    def dN = new File(deployDir + fn.substring(0, i) + "-anchor.txt")
-                    println dN
-                    while (!dN.exists()) {
+                    def dN = new File(deployDir + fn.substring(0, i))
+                    def fN = new File(dN + "-anchor.txt")
+                    println fN
+                    def succ = true
+                    i = 0
+                    while (!fN.exists()) {
+                        i++
+                        if ( i ==  24){
+                            succ = false
+                            break
+                        }
                         sleep(5000)
                         println """Waiting until $fnDeploy is DEPLOYED"""
                     }
@@ -152,10 +160,19 @@ class RequestHandler extends Restlet {
                     /* def result = new StringRepresentation(sb, MediaType.APPLICATION_JSON)
                     println result
                     response.setEntity(result) */
-
-                    response.setStatus(Status.SUCCESS_CREATED)
-                    def htmlFile = new File("deploy_response.html").getText('UTF-8')
-                    response.setEntity(htmlFile, MediaType.TEXT_HTML)
+                    if (succ == true) {
+                        response.setStatus(Status.SUCCESS_CREATED)
+                        def htmlFile = new File("deploy_response.html").getText('UTF-8')
+                        response.setEntity(htmlFile, MediaType.TEXT_HTML)
+                    }
+                    else {
+                        if(dN.exists()) {
+                            dN.deleteDir()
+                        }
+                        response.setStatus(Status.CLIENT_ERROR_REQUEST_TIMEOUT)
+                        def htmlFile = new File("deploy_bad_response.html").getText('UTF-8')
+                        response.setEntity(htmlFile, MediaType.TEXT_HTML)
+                    }
 
                 }
             }

@@ -5,8 +5,10 @@ function getListApps(){
     $.get( "getListApps", function( data ) {
         var res = data.split(",");
         var i;
-        for (i = 0 ; i < res.length ; i++){
-            addTableElem(res[i]);
+        if (res[0] != ""){
+            for (i = 0 ; i < res.length ; i++){
+                addTableElem(res[i]);
+            }
         }
     });
 
@@ -16,11 +18,28 @@ function getListDomains(){
     $.get( "getListDomains", function( data ) {
         var res = data.split(",");
         var i;
-        for (i = 0 ; i < res.length ; i++){
-            addTable2Elem(res[i]);
+        if (res[0] != ""){
+            for (i = 0 ; i < res.length ; i++){
+                addTable2Elem(res[i]);
+            }
         }
     });
 
+}
+
+function deleteApp (app) {
+    fN = app.id;
+    jQuery.ajax({
+     type: "DELETE",
+     url: "/app/" + fN,
+     success: function (data, status, jqXHR) {
+         location.reload();
+     },
+
+     error: function (jqXHR, status) {
+         // error handler
+     }
+    });
 }
 
 function deleteDomain (dom) {

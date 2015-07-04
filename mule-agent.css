@@ -202,3 +202,9 @@ label:hover {
   height:auto;
   overflow:hidden;
 }
+
+#result {
+    margin:5% auto 5% auto;
+    text-align:center;
+	color:#9999FF;
+}
