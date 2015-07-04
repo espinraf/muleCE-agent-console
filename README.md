@@ -4,7 +4,7 @@
 
 To run the server you must to set MULE_HOME variable.
 
-# groovy mule-agent.groovy
+    # groovy mule-agent.groovy
 
 
 
