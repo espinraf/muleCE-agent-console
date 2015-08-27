@@ -1,11 +1,13 @@
 @Grab(group='org.restlet.jse', module='org.restlet', version='2.3.2')
 @Grab(group='commons-fileupload', module='commons-fileupload', version='1.3.1')
 @Grab(group='org.restlet.osgi', module='org.restlet.ext.fileupload', version='2.2.2')
-
+@Grab(group='commons-io', module='commons-io', version='2.4')
 
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
+import org.apache.commons.io.input.TailerListener
+import org.apache.commons.io.input.Tailer
 import org.apache.commons.fileupload.FileItemIterator
 import org.apache.commons.fileupload.FileItemStream
 import org.apache.commons.fileupload.disk.DiskFileItemFactory
@@ -55,8 +57,16 @@ class RequestHandler extends Restlet {
                     def htmlFile = new File("mule-agent.js").getText('UTF-8')
                     response.setEntity(htmlFile, MediaType.APPLICATION_JAVASCRIPT)
                     break
+                case '/jquery-ui-1.11.4/jquery-ui.js':
+                    def htmlFile = new File("jquery-ui-1.11.4/jquery-ui.js").getText('UTF-8')
+                    response.setEntity(htmlFile, MediaType.APPLICATION_JAVASCRIPT)
+                    break
                 case '/mule-agent.css':
                     def htmlFile = new File("mule-agent.css").getText('UTF-8')
+                    response.setEntity(htmlFile, MediaType.TEXT_CSS)
+                    break
+                case '/jquery-ui-1.11.4/jquery-ui.css':
+                    def htmlFile = new File("jquery-ui-1.11.4/jquery-ui.css").getText('UTF-8')
                     response.setEntity(htmlFile, MediaType.TEXT_CSS)
                     break
                 case '/getListApps':
@@ -264,4 +274,18 @@ class RequestHandler extends Restlet {
 
 new Server(Protocol.HTTP, 3000, new RequestHandler()).start()
 
+logFile = new File('/Users/espinraf/Programs/mmc/mule-enterprise-3.5.2/logs/mule_ee.log')
+
+
+ws = new MuleAgentWebSocket(9090)
+ws.startDebug()
+ws.sendToAll('Connection Established')
+
+TailerListener listener = new MuleTailerListener()
+listener.mws = ws
+Tailer tailer = new Tailer(logFile, listener, 5000)
+Thread thread = new Thread(tailer)
+thread.setDaemon(false); // optional
+thread.sleep(20000)
+thread.start();
 

@@ -3,13 +3,17 @@
 <head>
     <title>Mule Deployments Console</title>
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" type="text/css" href="jquery-ui-1.11.4/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="mule-agent.css">
     <script src="jquery-2.1.4.min.js"></script>
+    <script src="jquery-ui-1.11.4/jquery-ui.js"></script>
     <script src="mule-agent.js"></script>
     <script>
         $( window ).load(function() {
             getListApps();
             getListDomains()
+            wsinit()
+            connect()
         });
     </script>
 </head>
@@ -78,10 +82,16 @@
             </tr>
             </tbody>
         </table>
-    <div>
+    </div>
+
+
+
+    <h2 class="demoHeaders">Log File</h2>
+    <textarea id="log" rows="50" cols="240" readonly></textarea>
 
     <div id="copyrights">
         <a href="http://www.redpill-linpro.se" title="Contact me" target="_blank">http://www.redpill-linpro.se</a>
     </div>
+
 </body>
 </html>

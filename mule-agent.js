@@ -154,3 +154,100 @@ $(function(){
 function reloadInitPage() {
     window.location.href = "/index.html";
 }
+
+
+// Websocket
+var socket = null;
+
+var addressBox = null;
+var logBox = null;
+var messageBox = null;
+
+function addToLog(log) {
+  logBox.value += log + '\n'
+  // Large enough to keep showing the latest message.
+  logBox.scrollTop = 1000000;
+}
+
+function send() {
+  if (!socket) {
+    addToLog('Not connected');
+    return;
+  }
+
+  socket.send(messageBox.value);
+  addToLog('> ' + messageBox.value);
+  //messageBox.value = '';
+
+  /*data = messageBox.value.map(function (num) {
+    return String.fromCharCode(num);
+  }).join('');
+  addToLog('> ' + data);*/
+  //var data = messageBox.value.charCodeAt(38);
+  //addToLog('> ' + data);
+}
+
+function connect() {
+  if ('WebSocket' in window) {
+    socket = new WebSocket(addressBox);
+  } else if ('MozWebSocket' in window) {
+    socket = new MozWebSocket(addressBox);
+  } else {
+    return;
+  }
+  socket.binaryType = "arraybuffer";
+  socket.onopen = function () {
+    addToLog('Opened');
+  };
+  socket.onmessage = function (event) {
+    addToLog('< ' + event.data);
+  };
+  socket.onerror = function () {
+    addToLog('Error');
+  };
+  socket.onclose = function (event) {
+    var logMessage = 'Closed (';
+    if ((arguments.length == 1) && ('CloseEvent' in window) &&
+        (event instanceof CloseEvent)) {
+      logMessage += 'wasClean = ' + event.wasClean;
+      // code and reason are present only for
+      // draft-ietf-hybi-thewebsocketprotocol-06 and later
+      if ('code' in event) {
+        logMessage += ', code = ' + event.code;
+      }
+      if ('reason' in event) {
+        logMessage += ', reason = ' + event.reason;
+      }
+    } else {
+      logMessage += 'CloseEvent is not available';
+    }
+    addToLog(logMessage + ')');
+  };
+
+  addToLog('Connect ' + addressBox);
+}
+
+function closeSocket() {
+  if (!socket) {
+    addToLog('Not connected');
+    return;
+  }
+
+  socket.close();
+
+}
+
+function wsinit() {
+  var scheme = window.location.protocol == 'https:' ? 'wss://' : 'ws://';
+  var defaultAddress = scheme + window.location.hostname + ':9090/';
+
+  addressBox = defaultAddress;
+  logBox = document.getElementById('log');
+  messageBox = "";
+
+  if ('MozWebSocket' in window) {
+    addToLog('Use MozWebSocket');
+  } else if (!('WebSocket' in window)) {
+    addToLog('WebSocket is not available');
+  }
+}
