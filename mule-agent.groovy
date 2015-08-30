@@ -153,7 +153,7 @@ class RequestHandler extends Restlet {
 
                     i = fn.indexOf(".zip")
                     def dN = new File(deployDir + fn.substring(0, i))
-                    def fN = new File(dN + "-anchor.txt")
+                    def fN = new File(deployDir + fn.substring(0, i) + "-anchor.txt")
                     println fN
                     def succ = true
                     i = 0
@@ -274,7 +274,18 @@ class RequestHandler extends Restlet {
 
 new Server(Protocol.HTTP, 3000, new RequestHandler()).start()
 
-logFile = new File('/Users/espinraf/Programs/mmc/mule-enterprise-3.5.2/logs/mule_ee.log')
+def muleDir = System.getenv("MULE_HOME")
+logFile_ee = new File(muleDir + '/logs/mule_ee.log')
+logFile_ce = new File(muleDir + '/logs/mule.log')
+
+def logFile
+
+if (logFile_ee.exists()){
+    logFile = logFile_ee
+}
+else {
+    logFile = logFile_ce
+}
 
 
 ws = new MuleAgentWebSocket(9090)
@@ -286,6 +297,5 @@ listener.mws = ws
 Tailer tailer = new Tailer(logFile, listener, 5000)
 Thread thread = new Thread(tailer)
 thread.setDaemon(false); // optional
-thread.sleep(20000)
 thread.start();
 
